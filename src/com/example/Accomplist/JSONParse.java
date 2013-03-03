@@ -19,7 +19,10 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -38,100 +41,34 @@ public class JSONParse {
     static String myJsonString = "";
 
     // constructor
-
-
-    public JSONObject getJSONFromUrl(String url) {
-
-        // Making HTTP request
+    public static String readJSONRequest() {
+        StringBuilder builder = new StringBuilder();
+        HttpClient client = new DefaultHttpClient();
+        HttpGet getRequest = new HttpGet("http://accomplist.herokuapp.com/api/v1/sharedevent/?format=json");
         try {
-            // defaultHttpClient
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(url);
+            HttpResponse response = client.execute(getRequest);
+            StatusLine statusLine = response.getStatusLine();
+            int statusCode = statusLine.getStatusCode();
+            if (statusCode == 200) {
+                HttpEntity entity = response.getEntity();
+                InputStream content = entity.getContent();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+                String line;
 
-            HttpResponse httpResponse = httpClient.execute(httpPost);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            is = httpEntity.getContent();
-
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+                while ((line = reader.readLine()) != null) {
+                    builder.append(line);
+                }
+            } else {
+                Log.e(JSONParse.class.toString(), "Failed Bro");
+            }
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    is, "iso-8859-1"), 8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-            is.close();
-            jsonS = sb.toString();
-        } catch (Exception e) {
-            Log.e("Buffer Error", "Error converting result " + e.toString());
-        }
-
-        // try parse the string to a JSON object
-        try {
-            jObj = new JSONObject(jsonS);
-        } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
-        }
-
-        // return JSON String
-        return jObj;
-
-    }
-    // url to make request
-    private static String url = "http://accomplist.herokuapp.com/api/v1/sharedevent/?format=json";
-
-    // JSON Node names
-    private static final String TAG_EVENTTITLE = "listitem";
-
-    // contacts JSONArray
-    JSONArray contacts = null;
-
-    // Creating JSON Parser instance
-    JSONParse jParser = new JSONParse();
-
-    // getting JSON string from URL
-    JSONObject json = jParser.getJSONFromUrl(url);
-    public void run() {
-        // Getting Array of Contacts
-        try {
-            contacts = json.getJSONArray(TAG_EVENTTITLE);
-        } catch (JSONException e1) {
-            e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-        // looping through All Contacts
-        for(int i = 0; i < contacts.length(); i++){
-            JSONObject c = null;
-            try {
-                c = contacts.getJSONObject(i);
-            } catch (JSONException e1) {
-                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            }
-
-            // Storing each json item in variable
-            try {
-                String id = c.getString(TAG_EVENTTITLE);
-            } catch (JSONException e1) {
-                e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        Log.d(String.valueOf(builder), "JSON RESPONSE");
+        return builder.toString();
     }
 
 
-     for (int a=0; a<contacts.length();a++) {
-         myJsonString+=contacts.optJSONObject(a).toString();
-
-     }
-
-}
-    public static String myStringOut() {
-        return myJsonString;
-    }
 }

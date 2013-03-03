@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Accomplist.iml" filepath="$PROJECT_DIR$/Accomplist.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AccomplistAndroid.iml" filepath="$PROJECT_DIR$/AccomplistAndroid.iml" />
     </modules>
   </component>
 </project>
