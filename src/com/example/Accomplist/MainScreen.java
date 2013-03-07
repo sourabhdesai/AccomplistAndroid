@@ -30,7 +30,7 @@ import java.io.IOException;
  * Time: 7:34 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MainScreen extends ListActivity {
+public class MainScreen extends Activity {
     TextView myTextView;
     JSONObject jsonObj= null;
 
