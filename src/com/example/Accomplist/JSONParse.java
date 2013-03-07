@@ -6,69 +6,71 @@ package com.example.Accomplist;
  * Time: 9:28 PM
  * To change this template use File | Settings | File Templates.
  */
+/*
+import android.os.AsyncTask;
 
-import android.util.Log;
 
+//package com.cw.json;
 
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-
-
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-public class JSONParse {
+public class JSONParse extends AsyncTask<String, String, JSONObject> {
+    HttpClient client;
+    JSONObject jsonObj= null;
 
-    static InputStream is = null;
-    static JSONObject jObj = null;
-    static String jsonS = "";
-    static String myJsonString = "";
 
-    // constructor
-    public static String readJSONRequest() {
-        StringBuilder builder = new StringBuilder();
-        HttpClient client = new DefaultHttpClient();
-        HttpGet getRequest = new HttpGet("http://accomplist.herokuapp.com/api/v1/sharedevent/?format=json");
+
+    @Override
+    protected JSONObject doInBackground(String... jsonurl) {
+        StringBuilder url= new StringBuilder(String.valueOf(jsonurl));
+
+        HttpGet get= new HttpGet(url.toString());
+        HttpResponse r= null;
         try {
-            HttpResponse response = client.execute(getRequest);
-            StatusLine statusLine = response.getStatusLine();
-            int statusCode = statusLine.getStatusCode();
-            if (statusCode == 200) {
-                HttpEntity entity = response.getEntity();
-                InputStream content = entity.getContent();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    builder.append(line);
-                }
-            } else {
-                Log.e(JSONParse.class.toString(), "Failed Bro");
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
+            r = client.execute(get);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        Log.d(String.valueOf(builder), "JSON RESPONSE");
-        return builder.toString();
+        int status= r.getStatusLine().getStatusCode();
+            if (status==200){
+                HttpEntity e=r.getEntity();
+                String data= null;
+                try {
+                    data = EntityUtils.toString(e);
+                } catch (IOException e1) {
+                    e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+
+                try {
+                    jsonObj = new JSONObject(data);
+                } catch (JSONException e1) {
+                    e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+                return jsonObj;
+
+            }
+            else{
+                return null;
+            }
+
+        }
+   /*
+    protected void onProgressUpdate(String... progress) {
+        progress="Loading...";
+        return progress;
     }
 
+    protected void onPostExecute(JSONObject result) {
+        MainScreen.json=jsonObj;
+    }
 
-}
+    }   */

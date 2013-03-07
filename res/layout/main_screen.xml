@@ -15,5 +15,5 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textView1" android:layout_gravity="center" android:background="#ffffff"
-            android:textColor="#0c7cff" android:textSize="30dp"/>
+            android:textColor="#0c7cff" android:textSize="35dp"/>
 </LinearLayout>

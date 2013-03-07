@@ -3,6 +3,7 @@ package com.example.Accomplist;
 import android.app.Activity;
 import android.os.Bundle;
 import android.content.Intent;
+//import org.json.JSONObject;
 
 public class MyActivity extends Activity {
     //Main Splash Screen
@@ -17,6 +18,7 @@ public class MyActivity extends Activity {
         public void run()   {
         try {
             sleep(5000);
+
         } catch(InterruptedException e) {
             e.printStackTrace();
         }   finally {
