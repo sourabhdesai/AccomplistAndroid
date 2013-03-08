@@ -8,12 +8,12 @@
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Top Events"
+            android:text="Events"
             android:id="@+id/textView" android:layout_gravity="center" android:textColor="#ffffff"
             android:textSize="50dp" android:background="#0a7bff" android:textAlignment="textEnd"/>
-    <TextView
+    <ListView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/textView1" android:layout_gravity="center" android:background="#ffffff"
-            android:textColor="#0c7cff" android:textSize="35dp"/>
+            android:drawSelectorOnTop="false"
+            android:id="@android:id/list" android:layout_gravity="center"/>
 </LinearLayout>

@@ -1,13 +1,10 @@
 package com.example.Accomplist;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -22,6 +19,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,13 +28,15 @@ import java.io.IOException;
  * Time: 7:34 PM
  * To change this template use File | Settings | File Templates.
  */
-public class MainScreen extends Activity {
-    TextView myTextView;
+public class MainScreen extends ListActivity{
     JSONObject jsonObj= null;
 
-   // HttpClient client;
-    // url to make request
-    final static String url = "http://accomplist.herokuapp.com/api/v1/sharedevent/2/?format=json";
+    ArrayList<String> eventArr=new ArrayList<String>();
+    int i=0;
+
+    String url= "http://accomplist.herokuapp.com/api/v1/sharedevent/?format=json";//"http://accomplist.herokuapp.com/api/v1/sharedevent/1/?format=json";
+
+
     //Following comment block is example of json object from above url
     {
     /*
@@ -74,21 +74,26 @@ public class MainScreen extends Activity {
 
      */
     }
-    private static final String TAG_EVENT="event"; //A JSON object within the JSON object that will be returned by JSONParse()
-    private static final String TAG_DESCRIPTION="description"; //A JSON tag within the JSON object EVENT
+    private static final String TAG_OBJECTS="objects"; //A JSON array from the main JSON Object
+    private static final String TAG_EVENT="event";     //A JSON tag within the JSON object OBJECTS
+    private static final String TAG_TITLE="title";     //A JSON tag within the JSON object EVENT
+    private static final String TAG_LI="listitem";     //A JSON tag within the JSON object TITLE
+    private static final String TAG_USER="user";       //A JSON tag within the JSON object EVENT
+    private static final String TAG_UN="username";     //A JSON tag within the JSON object USER
     private static String eventString="Yo";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
-        new JSONParse().execute("");
+        ListView eventsList= getListView();
+        new JSONParse().execute(url);
     }
-private class JSONParse extends AsyncTask<String, Void, String> {
-    HttpClient client=new DefaultHttpClient();
+private class JSONParse extends AsyncTask<String, Void, ArrayList<String>> {
 
     @Override
-    protected String doInBackground(String... jsonurl) {
-//        StringBuilder url= new StringBuilder(String.valueOf(jsonurl));
-        HttpUriRequest request= new HttpGet("http://accomplist.herokuapp.com/api/v1/sharedevent/2/?format=json");
+    protected ArrayList<String> doInBackground(String... str) {
+        HttpClient client=new DefaultHttpClient();
+        HttpUriRequest request= new HttpGet(url);
         HttpResponse r= null;
         try {
             r = client.execute(request);
@@ -113,28 +118,38 @@ private class JSONParse extends AsyncTask<String, Void, String> {
                 e1.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             }
             try {
-                JSONObject eventJson= jsonObj.getJSONObject(TAG_EVENT);
-                eventString= eventJson.getString(TAG_DESCRIPTION);
+                JSONArray objectsJson= jsonObj.getJSONArray(TAG_OBJECTS);    //I guess its not getting the JSONArray...
+                for (int n=0; n<10; n++)  {
+                    JSONObject singleJSON=objectsJson.getJSONObject(n);
+                    JSONObject eventJSON=singleJSON.getJSONObject(TAG_EVENT);
+                    JSONObject titleJSON= eventJSON.getJSONObject(TAG_TITLE);
+                    String eventTitleStr= titleJSON.getString(TAG_LI);
+                    JSONObject userJSON= eventJSON.getJSONObject(TAG_USER);
+                    String usernameStr= userJSON.getString(TAG_UN);
+                    String totalEventStr= "\""+eventTitleStr+"\" -"+usernameStr; //Example: '"Get a Job I Enjoy" -sourabhd'
+                    eventArr.add(totalEventStr);
+                }
+                return eventArr;
             }
             catch (JSONException e1) {
-                eventString="Couldn't Parse Data";
+             e1.printStackTrace();
             }
-            return eventString;
         }
         else{
-            return eventString;
+            eventArr.add("Didn't Work Bro");
+            eventArr.add("Try Again! Dont Give Up!!");
+            return eventArr;
         }
+        eventArr.add("Alright Somethings Really Fucked Up");
+        return eventArr;
     }
     protected void onProgressUpdate() {
         Toast loadingToast= Toast.makeText(getApplicationContext(), "Loading", Toast.LENGTH_LONG);
         loadingToast.show();
     }
-    protected void onPostExecute(String result) {
-        eventString=result;
-
-        myTextView= (TextView)findViewById(R.id.textView1);
-        myTextView.setText(eventString);
-
+    protected void onPostExecute(ArrayList<String> result) {
+        MainScreen.this.setListAdapter(new ArrayAdapter<String>(MainScreen.this,
+                android.R.layout.simple_list_item_1,result));
     }
 }
 }
