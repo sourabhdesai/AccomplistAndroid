@@ -1,8 +1,10 @@
 package com.example.Accomplist;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -29,7 +31,8 @@ import java.util.ArrayList;
  * To change this template use File | Settings | File Templates.
  */
 public class MainScreen extends ListActivity{
-    JSONObject jsonObj= null;
+   static JSONObject jsonObj= null;
+   static int objectsIndex;
 
     ArrayList<String> eventArr=new ArrayList<String>();
     int i=0;
@@ -75,18 +78,30 @@ public class MainScreen extends ListActivity{
      */
     }
     private static final String TAG_OBJECTS="objects"; //A JSON array from the main JSON Object
-    private static final String TAG_EVENT="event";     //A JSON tag within the JSON object OBJECTS
+    private static final String TAG_EVENT="event";     //A JSON tag within the JSON array OBJECTS
     private static final String TAG_TITLE="title";     //A JSON tag within the JSON object EVENT
     private static final String TAG_LI="listitem";     //A JSON tag within the JSON object TITLE
     private static final String TAG_USER="user";       //A JSON tag within the JSON object EVENT
     private static final String TAG_UN="username";     //A JSON tag within the JSON object USER
-    private static String eventString="Yo";
+    public final static String[] Months= {"January","February","March","April","May","June","July","August","September","November","December"};
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
         ListView eventsList= getListView();
         new JSONParse().execute(url);
+    }
+
+    protected void onListItemClick (ListView l, View v, int position, long id)  {
+        super.onListItemClick(l,v,position,id);
+        objectsIndex=position;
+        try {
+            Class viewEvent= Class.forName("com.example.Accomplist.ViewEvent");
+            Intent viewEventIntent= new Intent(MainScreen.this, viewEvent);
+            startActivity(viewEventIntent);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 private class JSONParse extends AsyncTask<String, Void, ArrayList<String>> {
 
@@ -119,7 +134,7 @@ private class JSONParse extends AsyncTask<String, Void, ArrayList<String>> {
             }
             try {
                 JSONArray objectsJson= jsonObj.getJSONArray(TAG_OBJECTS);    //I guess its not getting the JSONArray...
-                for (int n=0; n<10; n++)  {
+                for (int n=0; n<objectsJson.length(); n++)  {
                     JSONObject singleJSON=objectsJson.getJSONObject(n);
                     JSONObject eventJSON=singleJSON.getJSONObject(TAG_EVENT);
                     JSONObject titleJSON= eventJSON.getJSONObject(TAG_TITLE);

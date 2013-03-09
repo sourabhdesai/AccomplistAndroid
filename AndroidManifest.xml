@@ -19,6 +19,13 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:name="ViewEvent"
+                  android:label="@string/appTitle">
+            <intent-filter>
+                <action android:name="com.example.Accomplist.VIEWEVENT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>
