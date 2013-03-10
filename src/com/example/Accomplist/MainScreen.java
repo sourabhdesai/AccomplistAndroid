@@ -79,6 +79,7 @@ public class MainScreen extends ListActivity{
     }
     private static final String TAG_OBJECTS="objects"; //A JSON array from the main JSON Object
     private static final String TAG_EVENT="event";     //A JSON tag within the JSON array OBJECTS
+    private static final String TAG_VOTES="votes";     //A JSON tag within the JSON array OBJECTS
     private static final String TAG_TITLE="title";     //A JSON tag within the JSON object EVENT
     private static final String TAG_LI="listitem";     //A JSON tag within the JSON object TITLE
     private static final String TAG_USER="user";       //A JSON tag within the JSON object EVENT
@@ -136,12 +137,13 @@ private class JSONParse extends AsyncTask<String, Void, ArrayList<String>> {
                 JSONArray objectsJson= jsonObj.getJSONArray(TAG_OBJECTS);    //I guess its not getting the JSONArray...
                 for (int n=0; n<objectsJson.length(); n++)  {
                     JSONObject singleJSON=objectsJson.getJSONObject(n);
+                    String upVotes= singleJSON.getString(TAG_VOTES);
                     JSONObject eventJSON=singleJSON.getJSONObject(TAG_EVENT);
                     JSONObject titleJSON= eventJSON.getJSONObject(TAG_TITLE);
                     String eventTitleStr= titleJSON.getString(TAG_LI);
                     JSONObject userJSON= eventJSON.getJSONObject(TAG_USER);
                     String usernameStr= userJSON.getString(TAG_UN);
-                    String totalEventStr= "\""+eventTitleStr+"\" -"+usernameStr; //Example: '"Get a Job I Enjoy" -sourabhd'
+                    String totalEventStr=upVotes+" Pts: "+"\""+eventTitleStr+"\" -"+usernameStr; //Example: '"Get a Job I Enjoy" -sourabhd'
                     eventArr.add(totalEventStr);
                 }
                 return eventArr;

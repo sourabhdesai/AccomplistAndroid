@@ -74,6 +74,7 @@ public class ViewEvent extends Activity {
     private static final String TAG_OBJECTS="objects";        //A JSON array from the main JSON Object
     private static final String TAG_DATE="date";              //A JSON tag within the JSON array OBJECTS
     private static final String TAG_EVENT="event";            //A JSON tag within the JSON array OBJECTS
+    private static final String TAG_VOTES="votes";            //A JSON tag within the JSON array OBJECTS
     private static final String TAG_DESC="description";       //A JSON tag within the JSON array OBJECTS
     private static final String TAG_TITLE="title";            //A JSON tag within the JSON object EVENT
     private static final String TAG_LI="listitem";            //A JSON tag within the JSON object TITLE
@@ -92,6 +93,7 @@ public class ViewEvent extends Activity {
                 try {
                         JSONArray objectsJSON=MainScreen.jsonObj.getJSONArray(TAG_OBJECTS);
                         JSONObject specUserJSON= objectsJSON.getJSONObject(MainScreen.objectsIndex);
+                        String upVotes= "Votes: "+specUserJSON.getString(TAG_VOTES);
                         String dateStringLong= specUserJSON.getString(TAG_DATE);
                         String dateStringShort= MainScreen.Months[Integer.parseInt(dateStringLong.substring(5,7))-1] +" "+dateStringLong.substring(8,10)+", "+dateStringLong.substring(0,4); //Example: January 17, 2013
                         JSONObject eventJSON=specUserJSON.getJSONObject(TAG_EVENT);
@@ -100,11 +102,12 @@ public class ViewEvent extends Activity {
                         String eventTitleStr= titleJSON.getString(TAG_LI);
                         JSONObject userJSON= eventJSON.getJSONObject(TAG_USER);
                         String usernameStr= userJSON.getString(TAG_UN);
-                        String[] eventDetails= new String[4];
+                        String[] eventDetails= new String[5];
                         eventDetails[0]= eventTitleStr;
                         eventDetails[1]= descString;
                         eventDetails[2]= dateStringShort;
-                        eventDetails[3]= usernameStr;
+                        eventDetails[3]= upVotes;
+                        eventDetails[4]= usernameStr;
                         return eventDetails;
                 }
                 catch (JSONException e1) {
@@ -120,17 +123,20 @@ public class ViewEvent extends Activity {
             /*
                         eventDetails[0]= eventTitleStr;
                         eventDetails[1]= descString;
-                        eventDetails[2]= dateString;
+                        eventDetails[2]= dateStringShort;
                         eventDetails[3]= usernameStr;
+                        eventDetails[4]= usernameStr;
             */
             TextView title= (TextView) findViewById(R.id.title);
             TextView desc= (TextView) findViewById(R.id.description);
             TextView date= (TextView) findViewById(R.id.date);
+            TextView votes= (TextView) findViewById(R.id.upvotes);
             TextView un= (TextView) findViewById(R.id.username);
             title.setText(singleEventDetails[0]);
             desc.setText(singleEventDetails[1]);
             date.setText(singleEventDetails[2]);
-            un.setText(singleEventDetails[3]);
+            votes.setText(singleEventDetails[3]);
+            un.setText(singleEventDetails[4]);
         }
     }
 }
