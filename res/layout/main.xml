@@ -4,11 +4,23 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:background="#ffffff">
+              android:background="@drawable/blue2whitegradient">
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accomplist"
+            android:id="@+id/Title" android:textColor="#0c7cff" android:textSize="50dp" android:textAlignment="center"
+            android:layout_marginLeft="30dp"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='"The purpose of life, after all, is to live it, to taste experience to the utmost, to reach out eagerly and without fear for newer and richer experiences."'
+            android:id="@+id/textView" android:textColor="#ffffff" android:textSize="20dp"
+            android:layout_marginTop="60dp"/>
     <TextView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:text="Accomplist"
-            android:id="@+id/Title" android:textColor="#000000" android:textSize="50dp" android:textAlignment="center"/>
+            android:layout_height="wrap_content"
+            android:text="-Eleanor Roosevelt"
+            android:id="@+id/textView1" android:textColor="#ffffff"/>
 </LinearLayout>
 

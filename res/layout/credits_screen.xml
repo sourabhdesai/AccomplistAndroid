@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView" android:background="#ffffff">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Credits"
+                android:id="@+id/textView" android:textColor="#ffffff" android:textSize="50dp"
+                android:background="#0a7bff"/>
+        <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="187dp">
+            <ImageView
+                    android:layout_width="180dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView" android:layout_gravity="center" android:background="@drawable/neelk"/>
+        </FrameLayout>
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Neel Kothari"
+                android:id="@+id/textView1" android:textAlignment="textEnd" android:paddingLeft="95dp"
+                android:textColor="#0c7cff" android:textSize="25dp"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Neel is the Founder of Accomplist. He did the programming and design for the Accomplist website. He aspires to be an entrepreneur that makes a lasting change on the world. Currently, he is a student at the University of Illinois at Urbana-Champaign"
+                android:id="@+id/textView2" android:textColor="#0c7cff"/>
+        <FrameLayout android:layout_width="fill_parent" android:layout_height="187dp" android:id="@+id/frameLayout">
+            <ImageView android:layout_width="200dp" android:layout_height="wrap_content" android:id="@+id/imageView1"
+                       android:layout_gravity="center" android:background="@drawable/sourabhd"/>
+        </FrameLayout>
+        <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="Sourabh Desai"
+                  android:id="@+id/textView3" android:textAlignment="textEnd" android:paddingLeft="85dp"
+                  android:textColor="#0c7cff" android:textSize="25dp"/>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:text="Sourabh is the programmer and designer behind the Accomplist Android app. He aspires for work that is creative, challenging, and impactful. Currently, he is a student at the University of Illinois at Urbana Champaign"
+                  android:id="@+id/textView4" android:textColor="#0c7cff"/>
+    </LinearLayout>
+</ScrollView>

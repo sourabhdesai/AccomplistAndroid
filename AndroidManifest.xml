@@ -12,6 +12,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name="MasterScreen"
+                  android:label="@string/appTitle">
+            <intent-filter>
+                <action android:name="com.example.Accomplist.MASTERSCREEN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity android:name="MainScreen"
                   android:label="@string/appTitle">
             <intent-filter>
@@ -26,6 +33,34 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
+        <activity android:name="UserDetailsActivity"
+                  android:label="@string/appTitle">
+            <intent-filter>
+                <action android:name="com.example.Accomplist.USERDETAILSACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="SearchActivity"
+                  android:label="@string/appTitle">
+            <intent-filter>
+                <action android:name="com.example.Accomplist.SEARCHACTIVITY"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="CreditsScreen"
+                  android:label="@string/appTitle">
+            <intent-filter>
+                <action android:name="com.example.Accomplist.CREDITSSCREEN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+    <activity android:name="AboutScreen"
+              android:label="@string/appTitle">
+        <intent-filter>
+            <action android:name="com.example.Accomplist.ABOUTSCREEN"/>
+            <category android:name="android.intent.category.DEFAULT"/>
+        </intent-filter>
+    </activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 </manifest>

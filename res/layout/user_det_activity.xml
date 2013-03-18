@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView" android:background="#ffffff">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent" android:background="#dfdfdf">
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Loading..."
+                android:id="@+id/firstname" android:layout_gravity="center" android:textColor="#ffffff"
+                android:textSize="50dp" android:background="#0a7bff" android:textAlignment="textEnd"/>
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:id="@+id/lastname" android:layout_gravity="center" android:textSize="50dp"
+                android:background="#ffffff" android:textColor="#0c7cff"/>
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:id="@+id/tagline" android:layout_gravity="center" android:background="#0c7cff"
+                android:textColor="#ffffff" android:textSize="50dp"/>
+        <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text=" "
+                android:id="@+id/upvotes" android:layout_gravity="center" android:textSize="50dp"
+                android:textColor="#0e7dff" android:background="#ffffff"/>
+    </LinearLayout>
+</ScrollView>

@@ -22,8 +22,9 @@ public class MyActivity extends Activity {
         } catch(InterruptedException e) {
             e.printStackTrace();
         }   finally {
-            Intent mainScreen= new Intent ("com.example.Accomplist.MAINSCREEN");
+            Intent mainScreen= new Intent ("com.example.Accomplist.MASTERSCREEN");
             startActivity(mainScreen);
+            finish();
         }
         }
        };

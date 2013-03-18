@@ -34,11 +34,11 @@
             android:text="Upvotes"
             android:id="@+id/upvotes" android:layout_gravity="center" android:textSize="50dp"
             android:textColor="#0e7dff" android:background="#ffffff"/>
-    <TextView
+    <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Username"
-            android:id="@+id/username" android:layout_gravity="center" android:background="#0c7cff"
-            android:textColor="#ffffff" android:textSize="50dp"/>
+            android:id="@+id/unbutton" android:layout_gravity="center" android:textSize="50dp"
+            android:textColor="#ffffff" android:background="#0c7cff" android:clickable="true"/>
 </LinearLayout>
 </ScrollView>

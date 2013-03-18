@@ -6,10 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -77,14 +74,34 @@ public class ViewEvent extends Activity {
     private static final String TAG_VOTES="votes";            //A JSON tag within the JSON array OBJECTS
     private static final String TAG_DESC="description";       //A JSON tag within the JSON array OBJECTS
     private static final String TAG_TITLE="title";            //A JSON tag within the JSON object EVENT
+    private static final String TAG_ID="id";                  //A JSON tag within the JSON object EVENT
     private static final String TAG_LI="listitem";            //A JSON tag within the JSON object TITLE
     private static final String TAG_USER="user";              //A JSON tag within the JSON object EVENT
     private static final String TAG_UN="username";            //A JSON tag within the JSON object USER
+
+    public static int idStr;
+
+    Button unButton;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_event);
         new JSONParse().execute(MainScreen.objectsIndex);
+        unButton = (Button) findViewById(R.id.unbutton);
+        unButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //To change body of implemented methods use File | Settings | File Templates.
+                try {
+                    Class userDetails= Class.forName("com.example.Accomplist.UserDetailsActivity");
+                    Intent userDetailsIntent= new Intent(ViewEvent.this, userDetails);
+                    startActivity(userDetailsIntent);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+        });
+
     }
     private class JSONParse extends AsyncTask<Integer, Void,String[]> {
 
@@ -93,7 +110,7 @@ public class ViewEvent extends Activity {
                 try {
                         JSONArray objectsJSON=MainScreen.jsonObj.getJSONArray(TAG_OBJECTS);
                         JSONObject specUserJSON= objectsJSON.getJSONObject(MainScreen.objectsIndex);
-                        String upVotes= "Votes: "+specUserJSON.getString(TAG_VOTES);
+                        String upVotes= "Points: "+specUserJSON.getString(TAG_VOTES);
                         String dateStringLong= specUserJSON.getString(TAG_DATE);
                         String dateStringShort= MainScreen.Months[Integer.parseInt(dateStringLong.substring(5,7))-1] +" "+dateStringLong.substring(8,10)+", "+dateStringLong.substring(0,4); //Example: January 17, 2013
                         JSONObject eventJSON=specUserJSON.getJSONObject(TAG_EVENT);
@@ -101,13 +118,14 @@ public class ViewEvent extends Activity {
                         JSONObject titleJSON= eventJSON.getJSONObject(TAG_TITLE);
                         String eventTitleStr= titleJSON.getString(TAG_LI);
                         JSONObject userJSON= eventJSON.getJSONObject(TAG_USER);
-                        String usernameStr= userJSON.getString(TAG_UN);
+                        idStr= userJSON.getInt(TAG_ID);
+                        String userNameStr= userJSON.getString(TAG_UN);
                         String[] eventDetails= new String[5];
                         eventDetails[0]= eventTitleStr;
                         eventDetails[1]= descString;
                         eventDetails[2]= dateStringShort;
                         eventDetails[3]= upVotes;
-                        eventDetails[4]= usernameStr;
+                        eventDetails[4]= userNameStr;
                         return eventDetails;
                 }
                 catch (JSONException e1) {
@@ -131,7 +149,7 @@ public class ViewEvent extends Activity {
             TextView desc= (TextView) findViewById(R.id.description);
             TextView date= (TextView) findViewById(R.id.date);
             TextView votes= (TextView) findViewById(R.id.upvotes);
-            TextView un= (TextView) findViewById(R.id.username);
+            TextView un= (TextView) findViewById(R.id.unbutton);
             title.setText(singleEventDetails[0]);
             desc.setText(singleEventDetails[1]);
             date.setText(singleEventDetails[2]);
