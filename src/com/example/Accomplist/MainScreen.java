@@ -158,7 +158,7 @@ private class JSONParse extends AsyncTask<String, Void, ArrayList<String>> {
             eventArr.add("Try Again! Dont Give Up!!");
             return eventArr;
         }
-        eventArr.add("Alright Somethings Really Fucked Up");
+        eventArr.add("Alright Somethings Really Screwed Up");
         return eventArr;
     }
     protected void onProgressUpdate() {
